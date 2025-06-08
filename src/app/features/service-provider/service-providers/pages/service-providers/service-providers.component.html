@@ -1,0 +1,17 @@
+<div class="ag-theme-alpine" style="height: 500px; width: 100%">
+  <ag-grid-angular
+    class="ag-grid-responsive"
+    [rowData]="serviceProviders"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    rowSelection="single"
+    [pagination]="true"
+    [paginationPageSize]="20"
+    [domLayout]="'autoHeight'"
+    [animateRows]="true"
+    (gridReady)="onGridReady($event)"
+    [enableBrowserTooltips]="true"
+  >
+  </ag-grid-angular>
+</div>
+
