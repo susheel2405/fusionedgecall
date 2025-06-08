@@ -27,6 +27,9 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter', // Explicitly set the filter type
+     
+     
     },
     {
       field: 'caseRef',
@@ -43,6 +46,13 @@ export class CallsComponent implements OnInit {
 
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+
+      filter: 'agTextColumnFilter',
+      
+      // floatingFilter: true,
+      // floatingFilterComponentParams: {
+      //   suppressFilterButton: true,
+      // },
     },
     {
       field: 'caseNo',
@@ -51,6 +61,7 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'caseDate',
@@ -59,6 +70,7 @@ export class CallsComponent implements OnInit {
       flex: 2,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'callerName',
@@ -67,6 +79,7 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc'},
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'deceasedName',
@@ -75,6 +88,7 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'client',
@@ -83,6 +97,7 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc'},
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'type',
@@ -91,6 +106,7 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'funeralDate',
@@ -99,10 +115,11 @@ export class CallsComponent implements OnInit {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
   ];
 
-  defaultColDef: ColDef = { sortable: true, filter: true, resizable: true };
+  defaultColDef: ColDef = { sortable: true, filter: true, resizable: true};
 
   constructor(
     private callService: CallsService,

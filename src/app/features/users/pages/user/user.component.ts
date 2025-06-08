@@ -46,6 +46,7 @@ export class UserComponent implements OnInit {
       flex:1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'Lastname',
@@ -54,6 +55,7 @@ export class UserComponent implements OnInit {
       flex:1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'UserEmail',
@@ -62,6 +64,7 @@ export class UserComponent implements OnInit {
       flex:2,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'PhoneNumber',
@@ -70,6 +73,7 @@ export class UserComponent implements OnInit {
       flex:1,
       cellStyle: { borderRight: '1px solid #ccc', textAlign: 'center' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'IsActive',
@@ -84,6 +88,7 @@ export class UserComponent implements OnInit {
         justifyContent: 'center',
       },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'view',
@@ -101,6 +106,7 @@ export class UserComponent implements OnInit {
       },
       onCellClicked: (params: any) => this.openPopup(params.data),
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
   ];
 

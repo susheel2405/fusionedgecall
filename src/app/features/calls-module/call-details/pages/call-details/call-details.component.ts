@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SOUTH_AFRICAN_LANGUAGES } from '../../../../../constants/south-african-languages';
 import { Call } from '../../../calls/models/Call';
 import { CallDataService } from '../../../calls/services/call-data-service/call-data.service';
+import { Client } from '../../../../client/models/Client';
+import { ClientService } from '../../../../client/services/client.service';
 
 @Component({
   selector: 'app-call-details',
@@ -21,13 +23,16 @@ export class CallDetailsComponent implements OnInit {
   caseData: Call | null = null;
 
   // List of clients for the dropdown
-  clients: string[] = ['1Life-Agency1', 'Client B', 'Client C'];
+  
+  clients: string[] = ['AUL-FUNER SCHEMES (INACTIVE)'];
+  clientNames: string[] = [];
   serviceTypes: string[] = ['AVS-Legal Assist', 'Service Type B', 'Service Type C'];
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private callDataService: CallDataService
+    private callDataService: CallDataService,
+    private clientService: ClientService
   ) {}
 
   ngOnInit(): void {

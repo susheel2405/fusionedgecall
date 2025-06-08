@@ -49,6 +49,7 @@ export class AreaCodesComponent implements OnInit {
       },
       cellStyle: { borderRight: '1px solid #ccc', textAlign: 'center' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'Description',
@@ -65,6 +66,7 @@ export class AreaCodesComponent implements OnInit {
       },
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'Type',
@@ -84,6 +86,7 @@ export class AreaCodesComponent implements OnInit {
       },
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
 
     {
@@ -101,6 +104,7 @@ export class AreaCodesComponent implements OnInit {
         justifyContent: 'center',
       },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
     },
 
     {
@@ -116,6 +120,7 @@ export class AreaCodesComponent implements OnInit {
         justifyContent: 'center',
       },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
       onCellClicked: (params: any) => this.softDeleteProvider(params.data),
     },
     {

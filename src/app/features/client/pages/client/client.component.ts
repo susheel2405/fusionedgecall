@@ -46,8 +46,8 @@ export class ClientComponent implements OnInit  {
       flex: 1,
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
       sortable: true,
-      filter: true
     },
     {
       field: 'claimsManager',
@@ -57,7 +57,7 @@ export class ClientComponent implements OnInit  {
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
       sortable: true,
-      filter: true
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'groupName',
@@ -67,7 +67,7 @@ export class ClientComponent implements OnInit  {
       cellStyle: { borderRight: '1px solid #ccc' },
       headerClass: 'bold-header',
       sortable: true,
-      filter: true
+     filter: 'agTextColumnFilter',
     },
     {
       field: 'areaCode',
@@ -77,7 +77,7 @@ export class ClientComponent implements OnInit  {
       cellStyle: { borderRight: '1px solid #ccc', textAlign: 'center' },
       headerClass: 'bold-header',
       sortable: true,
-      filter: true
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'telephone',
@@ -87,7 +87,7 @@ export class ClientComponent implements OnInit  {
       cellStyle: { borderRight: '1px solid #ccc', textAlign: 'center' },
       headerClass: 'bold-header',
       sortable: true,
-      filter: true
+      filter: 'agTextColumnFilter',
     },
     {
       field: 'isActive',
@@ -104,7 +104,7 @@ export class ClientComponent implements OnInit  {
       },
       headerClass: 'bold-header',
       sortable: false,
-      filter: false
+      filter: 'agTextColumnFilter',
     },
      {
       headerName: 'Delete',
@@ -118,6 +118,7 @@ export class ClientComponent implements OnInit  {
         justifyContent: 'center',
       },
       headerClass: 'bold-header',
+      filter: 'agTextColumnFilter',
       onCellClicked: (params: any) => this.softDeleteProvider(params.data),
     },
   

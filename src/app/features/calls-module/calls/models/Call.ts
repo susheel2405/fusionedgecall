@@ -1,3 +1,4 @@
+import { Client } from "../../../client/models/Client";
 export interface Call {
   status: string;
   caseRef: string;
@@ -5,7 +6,7 @@ export interface Call {
   caseDate: string;
   callerName: string;
   deceasedName: string;
-  client: string;
+  client: Client;
   type: string;
   funeralDate: string;
   callerFirstName: string;
