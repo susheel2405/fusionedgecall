@@ -1,14 +1,16 @@
 import { AreaCodes } from "../../areacodes/models/AreaCodes";
 
 export interface Client {
- Id?: number;
-  Name: string;
-  ClaimsManager: string;
-  GroupName: string;
-  AreaCode: AreaCodes;
+  id?: string;
+  CompanyName: string;
+  ClientGroup: string;
+  IsActive: boolean;
+  Address: string;
+  AreaCode: string;
   Telephone: string;
-  isDeleted?: boolean;
-    IsActive: boolean;
-  
-  
+  Fax: string;
+  WebURL: string;
+  CompanyLogo: string;
+  isDeleted: boolean;
+  claimsManager?: string;
 }

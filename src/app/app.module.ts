@@ -38,6 +38,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AreaCodesState } from './features/areacodes/state/area-code.state';
 import { ClientComponent } from './features/client/pages/client/client.component';
 import { ClientGroupComponent } from './features/client/pages/client-group/client-group.component';
+import { ClientPopupComponent } from './features/client/pages/client-popup/client-popup.component';
 
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
@@ -63,6 +64,7 @@ ModuleRegistry.registerModules([AllEnterpriseModule]);
     AreacodePopupComponent,
     ClientComponent,
     ClientGroupComponent,
+    ClientPopupComponent,
     
   
   ],

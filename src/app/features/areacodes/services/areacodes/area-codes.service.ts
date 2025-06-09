@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AreaCodes } from '../../models/AreaCodes';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { API_ENDPOINTS } from '../../../../constants/api-endpoints';
 
 @Injectable({
@@ -10,35 +10,44 @@ import { API_ENDPOINTS } from '../../../../constants/api-endpoints';
 export class AreaCodesService {
   private apiUrl = API_ENDPOINTS.AREA_CODES;
   // Replace with your real API endpoint
+constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {}
 
-getAreaCodes(): Observable<AreaCodes[]> {
-    return this.http.get<AreaCodes[]>(this.apiUrl);
+  getAreaCodes(): Observable<AreaCodes[]> {
+    return this.http.get<AreaCodes[]>(this.apiUrl).pipe(
+      catchError((error) => {
+        console.error('Error fetching area codes:', error);
+        return throwError(() => error);
+      })
+    );
   }
- 
-  deleteAreaCode(code: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${code}`);
-  }
- 
-  //  addAreaCode(areaCode:  AreaCodes): Observable<AreaCodes> {
-  //   return this.http.post<AreaCodes>(this.apiUrl, areaCode);
-  // }
+
   addAreaCode(areaCode: AreaCodes): Observable<AreaCodes> {
-    const payload = {
-      AreaCode: areaCode.AreaCode,
-      Description: areaCode.Description,
-      Type: areaCode.Type,
-      IsActive: areaCode.IsActive,
-    };
-    return this.http.post<AreaCodes>(this.apiUrl, payload);
+    const url = areaCode.AreaCodeId
+      ? `${this.apiUrl}/${areaCode.AreaCodeId}`
+      : this.apiUrl;
+    const method = areaCode.AreaCodeId ? 'PUT' : 'POST';
+    console.log(`Sending ${method} request to ${url} with data:`, areaCode);
+
+    return (areaCode.AreaCodeId
+      ? this.http.put<AreaCodes>(url, areaCode)
+      : this.http.post<AreaCodes>(url, areaCode)
+    ).pipe(
+      catchError((error) => {
+        console.error(`Error in ${method} area code:`, error);
+        return throwError(() => error);
+      })
+    );
   }
- 
-  updateAreaCode(areaCode: AreaCodes): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${areaCode.AreaCode}`, areaCode);
-  }
- 
-  softDeleteAreaCode(areaCode: AreaCodes): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${areaCode.AreaCode}`, areaCode);
+
+  deleteAreaCode(areaCodeId: number): Observable<void> {
+    const url = `${this.apiUrl}/${areaCodeId}`;
+    console.log(`Sending DELETE request to ${url}`);
+    return this.http.delete<void>(url).pipe(
+      catchError((error) => {
+        console.error('Error deleting area code:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

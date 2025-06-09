@@ -31,3 +31,10 @@
   *ngIf="showPopup && activePopup === 'services'"
   (close)="closePopup()"
 ></app-services-page-popup>
+
+
+<app-client-popup
+  *ngIf="showPopup && activePopup === 'client-popup'"
+  (close)="closePopup()"
+></app-client-popup>
+

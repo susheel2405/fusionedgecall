@@ -30,4 +30,6 @@ export class ActiveToggleRendererComponent implements ICellRendererAngularComp {
       );
     }
   }
+
+  
 }

@@ -12,6 +12,7 @@ import { UserComponent } from './features/users/pages/user/user.component';
 import { AreaCodesComponent } from './features/areacodes/pages/area-codes/area-codes.component';
 import { ClientComponent } from './features/client/pages/client/client.component';
 import { ClientGroupComponent } from './features/client/pages/client-group/client-group.component';
+import { ClientPopupComponent } from './features/client/pages/client-popup/client-popup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -75,6 +76,8 @@ const routes: Routes = [
         title: 'client',
         data: { breadcrumb: 'Client / Client Group' },
       },
+
+    
 
       {
         path: 'service-provider',

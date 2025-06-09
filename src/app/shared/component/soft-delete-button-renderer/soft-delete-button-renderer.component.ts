@@ -6,6 +6,16 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
   standalone: false,
   templateUrl: './soft-delete-button-renderer.component.html',
   styleUrl: './soft-delete-button-renderer.component.css',
+  template: `
+    <button
+      class="btn btn-secondary"
+      (click)="onDeleteClick()"
+      title="Delete Permanently"
+    >
+      Delete Permanently
+    </button>
+  `,
+
 })
 export class SoftDeleteButtonRendererComponent
   implements ICellRendererAngularComp

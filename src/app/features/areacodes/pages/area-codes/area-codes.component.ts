@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActiveToggleRendererComponent } from '../../../../shared/component/active-toggle-renderer/active-toggle-renderer.component';
-import { SoftDeleteButtonRendererComponent } from '../../../../shared/component/soft-delete-button-renderer/soft-delete-button-renderer.component';
 import { AreaCodes } from '../../models/AreaCodes';
 import { AreaCodesService } from '../../services/areacodes/area-codes.service';
 import {
@@ -9,16 +7,17 @@ import {
   GetContextMenuItems,
   GetContextMenuItemsParams,
   GridApi,
-  ICellRendererParams,
 } from 'ag-grid-community';
 import {
   AddAreaCodeRowLocally,
   LoadAreaCodes,
-  SoftDeleteAreaCode,
+  DeleteAreaCode,
   UpdateAreaCode,
 } from '../../state/area-code.actions';
 import { Store } from '@ngxs/store';
 import { AreaCodesState } from '../../state/area-code.state';
+import { ActiveToggleRendererComponent } from '../../../../shared/component/active-toggle-renderer/active-toggle-renderer.component';
+import { SoftDeleteButtonRendererComponent } from '../../../../shared/component/soft-delete-button-renderer/soft-delete-button-renderer.component';
 
 @Component({
   selector: 'app-area-codes',
@@ -75,7 +74,6 @@ export class AreaCodesComponent implements OnInit {
       flex: 1,
       minWidth: 180,
       editable: true,
-      // cellEditor: 'agSelectCellEditor',
       cellEditor: 'agRichSelectCellEditor',
       cellEditorParams: {
         values: ['Landline', 'Mobile', 'International'],
@@ -88,15 +86,12 @@ export class AreaCodesComponent implements OnInit {
       headerClass: 'bold-header',
       filter: 'agTextColumnFilter',
     },
-
     {
       field: 'IsActive',
       headerName: 'Active',
       flex: 1,
       minWidth: 120,
-
       cellRenderer: 'activeToggleRenderer',
-
       cellStyle: {
         borderRight: '1px solid #ccc',
         display: 'flex',
@@ -106,10 +101,8 @@ export class AreaCodesComponent implements OnInit {
       headerClass: 'bold-header',
       filter: 'agTextColumnFilter',
     },
-
     {
       headerName: 'Delete',
-      // field: 'isDeleted',
       flex: 1,
       minWidth: 100,
       cellRenderer: 'softDeleteRenderer',
@@ -121,7 +114,7 @@ export class AreaCodesComponent implements OnInit {
       },
       headerClass: 'bold-header',
       filter: 'agTextColumnFilter',
-      onCellClicked: (params: any) => this.softDeleteProvider(params.data),
+      onCellClicked: (params: any) => this.deleteAreaCode(params.data),
     },
     {
       headerName: 'Save',
@@ -134,26 +127,26 @@ export class AreaCodesComponent implements OnInit {
         const disabledAttr = disabled ? 'disabled' : '';
 
         return `
-    <button
-      ${disabledAttr}
-      style="
-        background-color: ${disabled ? '#ccc' : '#05b9bc'};
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 500;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        padding: 0 14px;
-        font-size: 1rem;
-        justify-content: center;
-        cursor: ${disabled ? 'not-allowed' : 'pointer'};
-      "
-    >
-      Save
-    </button>
-  `;
+          <button
+            ${disabledAttr}
+            style="
+              background-color: ${disabled ? '#ccc' : '#05b9bc'};
+              color: white;
+              border: none;
+              border-radius: 8px;
+              font-weight: 500;
+              height: 42px;
+              display: flex;
+              align-items: center;
+              padding: 0 14px;
+              font-size: 1rem;
+              justify-content: center;
+              cursor: ${disabled ? 'not-allowed' : 'pointer'};
+            "
+          >
+            Save
+          </button>
+        `;
       },
       cellStyle: {
         borderRight: '1px solid #ccc',
@@ -201,7 +194,6 @@ export class AreaCodesComponent implements OnInit {
     const row = event.data;
     const isNew = !row.AreaCodeId;
 
-    // Just mark the row as edited; don't save automatically
     row.isEdited = true;
     this.gridApi.applyTransaction({ update: [row] });
   }
@@ -219,17 +211,13 @@ export class AreaCodesComponent implements OnInit {
       this.areaCodesService.addAreaCode(row).subscribe(
         () => {
           alert('Saved successfully!');
-
-          // Clear edited flag after save
           row.isEdited = false;
           this.gridApi.applyTransaction({ update: [row] });
-
-          // Optionally reload
           this.store.dispatch(new LoadAreaCodes());
         },
         (error) => {
-          alert('Error saving area code.');
-          console.error(error);
+          console.error('Error saving area code:', error);
+          alert(`Error saving area code: ${error.statusText || error.message}`);
         }
       );
     } else {
@@ -238,24 +226,40 @@ export class AreaCodesComponent implements OnInit {
   }
 
   getRowClass = (params: any) => {
-    // If AreaCodeId is not present, it's a newly added temporary row
     return !params.data.AreaCodeId ? 'temporary-row' : '';
   };
 
-  softDeleteProvider(areaCode: AreaCodes): void {
-    const updatedAreaCode = { ...areaCode, isDeleted: true };
-    this.store.dispatch(new SoftDeleteAreaCode(updatedAreaCode));
+  deleteAreaCode(areaCode: AreaCodes): void {
+    if (confirm('Are you sure you want to permanently delete this area code?')) {
+      if (!areaCode.AreaCodeId) {
+        console.log('Deleting temporary row:', areaCode);
+        const updatedState = this.rowData.filter((row) => row !== areaCode);
+        this.gridApi.applyTransaction({ remove: [areaCode] });
+        this.store.dispatch(new LoadAreaCodes());
+        alert('Temporary row deleted successfully!');
+        return;
+      }
+
+      console.log('Deleting area code with ID:', areaCode.AreaCodeId);
+      this.store.dispatch(new DeleteAreaCode(areaCode)).subscribe({
+        next: () => {
+          alert('Area code deleted successfully!');
+        },
+        error: (error) => {
+          console.error('Error deleting area code:', error);
+          const errorMessage = error.statusText || error.message || 'Unknown error';
+          alert(`Error deleting area code: ${errorMessage}. Check the console for more details.`);
+        },
+      });
+    }
   }
 
   addRow(): void {
     const newRow: AreaCodes = {
-      // AreaCodeId: 0,
       AreaCode: '',
       Description: '',
       Type: 'Landline',
       IsActive: true,
-
-      // isDeleted: false,
     };
     this.store.dispatch(new AddAreaCodeRowLocally(newRow));
   }
@@ -273,7 +277,7 @@ export class AreaCodesComponent implements OnInit {
       name: 'Delete Row',
       action: () => {
         if (params.node) {
-          this.softDeleteProvider(params.node.data);
+          this.deleteAreaCode(params.node.data);
         }
       },
       icon: '<i class="fas fa-trash"></i>',

@@ -93,6 +93,8 @@ export class BreadcrumbComponent {
       return 'service-provider-types';
     if (this.currentRoute.includes('/service-provider/services'))
       return 'services';
+    if(this.currentRoute.includes('/client'))
+      return 'client-popup'
     return null;
   }
 

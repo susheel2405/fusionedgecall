@@ -18,8 +18,8 @@ export class UpdateAreaCode {
   constructor(public payload: AreaCodes) {}
 }
  
-export class SoftDeleteAreaCode {
-  static readonly type = '[AreaCodes] Soft Delete';
+export class DeleteAreaCode {
+  static readonly type = '[AreaCodes] Delete AreaCode';
   constructor(public payload: AreaCodes) {}
 }
  
